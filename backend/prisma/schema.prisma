@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Tutorial {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags TutorialTag[]
+}
+
+model Tag {
+  id Int @id @default(autoincrement())
+  name String @unique
+
+  createdAt DateTime @default(now())
+
+  tutorials TutorialTag[]
+}
+
+model TutorialTag {
+  tutorialId Int
+  tagId Int
+
+  tutorial Tutorial @relation(fields: [tutorialId], references: [id], onDelete: Cascade)
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([tutorialId, tagId])
+}
