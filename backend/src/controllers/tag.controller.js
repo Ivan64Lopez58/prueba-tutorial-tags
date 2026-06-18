@@ -1,11 +1,13 @@
 const tagService = require("../services/tag.service");
 
+// trae todas las etiquetas
 const getTags = async (req, res) => {
     const tags = await tagService.getAllTags();
 
     res.json(tags);
 };
 
+// crea una etiqueta nueva
 const createTag = async (req, res, next) => {
     try {
         const { name } = req.body;
@@ -21,6 +23,7 @@ const createTag = async (req, res, next) => {
     }
 };
 
+// actualiza una etiqueta
 const updateTag = async (req, res) => {
     try {
         const { id } = req.params;
@@ -38,10 +41,11 @@ const updateTag = async (req, res) => {
     }
 };
 
-
+// elimina una etiqueta
 const deleteTag = async (req, res) => {
     const { id } = req.params;
-
+    
+    // validación básica
     if (!id) {
         return res.status(400).json({
             message: "El id del Tag es requerido"

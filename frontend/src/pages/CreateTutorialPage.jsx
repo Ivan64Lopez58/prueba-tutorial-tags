@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./CreateTutorialPage.css";
 import api from "../services/api";
 
 function CreateTutorialPage(){
@@ -15,11 +15,13 @@ function CreateTutorialPage(){
 		loadTags();
 	}, []);
 
+	// trae las etiquetas
 	const loadTags = async () => {
 		const response = await api.get("/tags");
 		setTags(response.data);
 	};
 
+	// guarda el tutorial
 	const handleSubmit = async (e) => { 
 		e.preventDefault();
 		
@@ -29,6 +31,7 @@ function CreateTutorialPage(){
 		navigate("/");
 	};
 
+	// guarda tags seleccionados
 	const handleTagChange = (e) => {
 		const values = Array.from(
 			e.target.selectedOptions
@@ -38,19 +41,19 @@ function CreateTutorialPage(){
 	};
 
 	return (
-		<div>
+		<div className="container">
 			<h1>Crear tutorial</h1>
-			<form onSubmit={handleSubmit}>
+			<form  className="form" onSubmit={handleSubmit}>
 				<div>
 					<input placeholder="Título" value={title} 
 						onChange={(e) => setTitle(e.target.value)}/>
 				</div>
 				<div>
-					<textarea placeholder="Descipción" value={description}
+					<textarea className="textarea" placeholder="Descipción" value={description}
 						onChange={(e) => setDescription(e.target.value)}/>
 				</div>
 				<div>
-					<select multiple onChange={handleTagChange}>
+					<select className="select" multiple onChange={handleTagChange}>
 						{tags.map((tag) => (
 							<option
 								key={tag.id}
@@ -61,7 +64,7 @@ function CreateTutorialPage(){
 						))}
 					</select>
 				</div>
-				<button type="submit">Guardar</button>
+				<button className="button" type="submit">Guardar</button>
 			</form>
 		</div>
 	);

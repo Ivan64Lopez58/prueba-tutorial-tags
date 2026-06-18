@@ -1,5 +1,6 @@
 const tutorialService = require("../services/tutorial.service");
 
+// trae todos los tutoriales
 const getTutorials = async (req, res, next) => {
     try {
         const { tag } = req.query;
@@ -10,6 +11,7 @@ const getTutorials = async (req, res, next) => {
     }
 };
 
+// crea un nuevo tutorial
 const createTutorial = async (req, res, next) => {
     try {
         const { 
@@ -35,8 +37,9 @@ const createTutorial = async (req, res, next) => {
     }
 };
 
-
+// actualiza un tutorial
 const updateTutorial = async (req, res, next) => {
+    // validación básica, gestión de los errores
     try {
         const { id } = req.params;
 
@@ -58,11 +61,11 @@ const updateTutorial = async (req, res, next) => {
     }
 }
 
-
+// elimina un tutorial
 const deleteTutorial = async (req, res, next) => {
     try {
         const { id } = req.params;
-        
+        // validación básica
         if (!id){
             return res.status(400).json({
                 message: "El Id del tutorial es requerido"

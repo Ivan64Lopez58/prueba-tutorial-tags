@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 
+// trae tutoriales, con filtro opcional por tag
 const getAllTutorials = async (tagName) => {
   const where = tagName
     ? {
@@ -26,7 +27,7 @@ const getAllTutorials = async (tagName) => {
   });
 };
 
-
+// crea tutorial con sus tags
 const createTutorial = async ({
 	title,
 	description,
@@ -58,7 +59,7 @@ const createTutorial = async ({
 	});
 };
 
-
+// actualiza tutorial
 const updateTutorial = async (id, title, description) => {
 	return await prisma.tutorial.update({
 		where: {
@@ -78,6 +79,7 @@ const updateTutorial = async (id, title, description) => {
 	});
 };
 
+// elimina tutorial
 const deleteTutorial = async (id) => {
 	return await prisma.tutorial.delete({
 		where: {

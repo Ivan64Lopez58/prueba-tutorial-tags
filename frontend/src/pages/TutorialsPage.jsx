@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
+import "./TutorialsPage.css";
 
 function TutorialsPage() {
 	const [tutorials, setTutorials] = useState([]);
@@ -11,15 +12,10 @@ function TutorialsPage() {
 		loadTutorials();
 		loadTags();
 	}, []);
-				
-	const loadTutorials = async (tagName = "") => {
-		let url = "";
 
-		if (tagName) {
-			url = `/tutorials?tag=${tagName}`;
-		} else {
-			url = "/tutorials";
-		}
+	// trae tutoriales con o sin filtro
+	const loadTutorials = async (tagName = "") => {
+		let url = tagName ? `/tutorials?tag=${tagName}` : "/tutorials";
 
 		try {
 			const response = await api.get(url);
@@ -29,51 +25,67 @@ function TutorialsPage() {
 		}
 	};
 
-	const deleteTutorial = async (id ) => {
+	// elimina tutorial
+	const deleteTutorial = async (id) => {
 		await api.delete(`/tutorials/${id}`);
 		loadTutorials(selectedTag);
 	};
 
+	// trae etiquetas para el filtro
 	const loadTags = async () => {
 		const response = await api.get("/tags");
 		setTags(response.data);
 	};
 
 	return (
-		<div>
-			<Link to="/create-tutorial">Crear Tutorial</Link>
-			<Link to="/tags">Administrar etiquetas</Link>
-			<h1>Tutoriales</h1>
-			<div>
-				<label htmlFor="filter-tags">Filtrar por etiqueta: </label>
-				<select id="filter-tags" name="filterTags" value={selectedTag}
-                    onChange={(e) => setSelectedTag(e.target.value)}>
-				
-					<option value="">Todas las etiquetas</option>
+		<div className="container">
+			
+			<div className="header">
+				<h1>Tutoriales</h1>
+
+				<div className="links">
+					<Link to="/create-tutorial">Crear</Link>
+					<Link to="/tags">Etiquetas</Link>
+				</div>
+			</div>
+
+			<div className="filter">
+				<label>Filtrar por etiqueta: </label>
+
+				<select
+					value={selectedTag}
+					onChange={(e) => setSelectedTag(e.target.value)}
+				>
+					<option value="">Todas</option>
+
 					{tags.map((tag) => (
-						<option key={tag.id} value={tag.name}> {tag.name} </option>
+						<option key={tag.id} value={tag.name}>
+							{tag.name}
+						</option>
 					))}
 				</select>
-			
-				<button onClick={() => loadTutorials(selectedTag)}>Filtrar</button>
-           
-		    </div>
-		
+
+				<button onClick={() => loadTutorials(selectedTag)}>
+					Filtrar
+				</button>
+			</div>
+
 			{tutorials.map((tutorial) => (
-				<div key={tutorial.id}>
+				<div className="card" key={tutorial.id}>
 					<h3>{tutorial.title}</h3>
 					<p>{tutorial.description}</p>
 
-					<ul>
-						{tutorial.tags.map((item) => (
-							<li key={item.tag.id}>
+					<div className="tags">
+						{tutorial.tags?.map((item) => (
+							<span key={item.tag.id}>
 								{item.tag.name}
-							</li>
+							</span>
 						))}
-					</ul>
-				
-					<button onClick={() => deleteTutorial(tutorial.id)}>Borrar</button>
-				
+					</div>
+
+					<button onClick={() => deleteTutorial(tutorial.id)}>
+						Borrar
+					</button>
 				</div>
 			))}
 		</div>
