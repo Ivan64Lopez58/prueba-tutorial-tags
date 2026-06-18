@@ -4,6 +4,8 @@ import api from "../services/api";
 function TagsPage() {
 	const [tags, setTags] = useState([]);
 	const [name, setName] = useState("");
+	const [editingId, setEditingId] = useState(null);
+	const [editingName, setEditingName] = useState("");
 
 	useEffect(() => {
 		loadTags();
@@ -25,6 +27,18 @@ function TagsPage() {
 		loadTags();
 	};
 
+	const deleteTag = async (id) => {
+		await api.delete(`/tags/${id}`);
+		loadTags();
+	};
+
+	const updateTag = async () => {
+		await api.put(`/tags/${editingId}`, { name: editingName, });
+		setEditingId(null);
+		setEditingName("");
+		loadTags();
+	};
+
 	return (
 		<div>
 			<h1>Etiquetas</h1>
@@ -40,7 +54,17 @@ function TagsPage() {
 			<ul>
 				{tags.map((tag) => (
 					<li key={tag.id}>
+						{editingId === tag.id ? ( <>
+						<input id={`edit-tag-${tag.id}`} name="editingTagName" value={editingName}
+							onChange={(e) => setEditingName(e.target.value)}/>
+
+						<button onClick={updateTag}>Guardar</button>
+						<button onClick={() => setEditingId(null)}>Cancelar</button></> 
+
+						) : ( <>
 						{tag.name}
+						<button onClick={() => { setEditingId(tag.id); setEditingName(tag.name); }}>Editar</button>
+						<button onClick={() => deleteTag(tag.id)}>Eliminar</button></>)}
 					</li>
 				))}
 			</ul>
