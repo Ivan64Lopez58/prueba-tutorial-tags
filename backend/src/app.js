@@ -5,6 +5,8 @@ const app = express();
 
 const tagRoutes = require("./routes/tag.routes");
 const tutorialRoutes = require("./routes/tutorial.routes");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpecs = require("./docs/swagger");
 
 
 app.use(cors());
@@ -19,7 +21,7 @@ app.get("/health", (req, res) => {
 
 app.use("/api/tags", tagRoutes);
 app.use("/api/tutorials", tutorialRoutes);
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 const errorHandler = require("./middlewares/error.middleware");
 
