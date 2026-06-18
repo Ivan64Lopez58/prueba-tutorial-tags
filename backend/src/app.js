@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 
 const tagRoutes = require("./routes/tag.routes");
+const tutorialRoutes = require("./routes/tutorial.routes");
 
 
 app.use(cors());
@@ -17,6 +18,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/tags", tagRoutes);
+app.use("/api/tutorials", tutorialRoutes);
 
 
 const errorHandler = require("./middlewares/error.middleware");

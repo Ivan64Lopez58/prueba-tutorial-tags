@@ -24,8 +24,8 @@ const updateTag = async (id, name) => {
 const deleteTag = async (id) => {
     return await prisma.tag.delete({
         where: {
-            id: Number(id)
-        }
+            id: Number(id),
+        },
     });
 };
 
