@@ -2,6 +2,9 @@
 
 Esta aplicación tiene el objetivo de gestionar tutoriales y etiquetas, que serán asignadas a determinados tutoriales si el cliente lo desea.
 
+### Clonar repositorio
+git clone https://github.com/Ivan64Lopez58/prueba-tutorial-tags.git
+
 ## Tecnologías
 React
 Express
@@ -11,10 +14,10 @@ Swagger
 
 ## Arquitectura
 
-[Capa de Presentación]   -->   Frontend / React
-[Capa de Negocio]        -->   API REST / Node.js
-[Capa de Persistencia]   -->   ORM / Prisma
-[Base de Datos]          -->   PostgreSQL
+[Capa de Presentación]   -->   Frontend / React  
+[Capa de Negocio]        -->   API REST / Node.js  
+[Capa de Persistencia]   -->   ORM / Prisma  
+[Base de Datos]          -->   PostgreSQL  
 
 ## Instalación
 
@@ -47,7 +50,11 @@ PORT=
 
 ## Despliegue
 
-Frontend:
+### Frontend
+https://prueba-tutorial-tags.vercel.app/
 
+### Backend
+https://prueba-tutorial-tags.onrender.com
 
-Backend:
+### API Docs (Swagger)
+https://prueba-tutorial-tags.onrender.com/api-docs/
